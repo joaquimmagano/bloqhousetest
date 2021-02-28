@@ -18,10 +18,10 @@ class PropertiesModule extends VuexModule {
     @MutationAction({ mutate: ['properties', 'propertiesLocations']})
     async getProperties(){
         const properties = await getProperties()
-        properties?.properties.forEach(property => {
+        properties.forEach(property => {
             property.isSelected = true
         });
-        const propertiesLocations = properties?.properties?.map(p => {
+        const propertiesLocations = properties?.map(p => {
             return {
                 title: p.location
             }
@@ -36,8 +36,8 @@ class PropertiesModule extends VuexModule {
     async investInProperty(payload){
         const propertyToUpdate = await investInProperty(payload)
         if(propertyToUpdate) {
-            const propertyToUpdateIndex = this.state.properties.properties.findIndex(p => p.id == propertyToUpdate.id)
-            this.state.properties.properties[propertyToUpdateIndex].availableShares = propertyToUpdate.availableShares;
+            const propertyToUpdateIndex = this.state.properties.findIndex(p => p.id == propertyToUpdate.id)
+            this.state.properties[propertyToUpdateIndex].availableShares = propertyToUpdate.availableShares;
         }
         return { 
             properties: this.state.properties,
@@ -56,7 +56,7 @@ class PropertiesModule extends VuexModule {
    
         if(this.state.selectedLocations.length > 0) {     
 
-            this.state.properties.properties.forEach(p => {
+            this.state.properties.forEach(p => {
                 if(this.state.selectedLocations.includes(p.location)){
                     p.isSelected = true;
                 } else {
@@ -64,7 +64,7 @@ class PropertiesModule extends VuexModule {
                 }
             });
         } else {
-            this.state.properties.properties.forEach( p => {
+            this.state.properties.forEach( p => {
                 p.isSelected = true;
             });
         }

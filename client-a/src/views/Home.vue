@@ -21,7 +21,7 @@ import PropertyCard from "@/components/PropertyCard.vue"; // @ is an alias to /s
   },
   computed: {
     properties() {
-      let properties = this.$store.state.propertiesData.properties.properties;
+      let properties = this.$store.state.propertiesData.properties;
       if(properties){
         if(this.showOnlyAvailableProperties){
           properties = properties.filter(p => p.isSelected && p.availableShares > 0);

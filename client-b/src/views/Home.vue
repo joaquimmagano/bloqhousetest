@@ -21,7 +21,7 @@ import ProjectCard from "@/components/ProjectCard.vue"; // @ is an alias to /src
   },
   computed: {
     projects() {
-      let projects = this.$store.state.projectsData.projects.projects;
+      let projects = this.$store.state.projectsData.projects;
       if(projects){
         if(this.showFundedProjects){
           projects = projects.filter(p => p.isSelected);

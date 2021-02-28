@@ -8,7 +8,7 @@ export const api = axios.create({
 export async function getProperties(){
     try {
         const response = await api.get('/properties');
-        return response.data as PropertiesResponse;
+        return response.data.properties as PropertiesResponse;
     } catch (e) {
         console.error(e)
     }

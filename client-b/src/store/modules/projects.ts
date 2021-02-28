@@ -18,10 +18,10 @@ class ProjectsModule extends VuexModule {
     @MutationAction({ mutate: ['projects', 'projectsCategories']})
     async getProjects(){
         const projects = await getProjects()
-        projects?.projects.forEach(project => {
+        projects.forEach(project => {
             project.isSelected = true
         });
-        const projectsCategories = projects?.projects?.map(p => {
+        const projectsCategories = projects?.map(p => {
             return {
                 title: p.category
             }
@@ -36,8 +36,8 @@ class ProjectsModule extends VuexModule {
     async investInProject(payload){
         const projectToUpdate = await investInProject(payload)
         if(projectToUpdate){
-            const projectToUpdateIndex = this.state.projects.projects.findIndex(p => p.id == projectToUpdate.id)
-            this.state.projects.projects[projectToUpdateIndex].availableSlots = projectToUpdate.availableSlots;
+            const projectToUpdateIndex = this.state.projects.findIndex(p => p.id == projectToUpdate.id)
+            this.state.projects[projectToUpdateIndex].availableSlots = projectToUpdate.availableSlots;
         }
         return { 
             projects: this.state.projects,
@@ -56,7 +56,7 @@ class ProjectsModule extends VuexModule {
    
         if(this.state.selectedCategories.length > 0) {     
 
-            this.state.projects.projects.forEach(p => {
+            this.state.projects.forEach(p => {
                 if(this.state.selectedCategories.includes(p.category)){
                     p.isSelected = true;
                 } else {
@@ -64,7 +64,7 @@ class ProjectsModule extends VuexModule {
                 }
             });
         } else {
-            this.state.projects.projects.forEach( p => {
+            this.state.projects.forEach( p => {
                 p.isSelected = true;
             });
         }

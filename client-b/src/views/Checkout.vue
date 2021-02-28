@@ -40,7 +40,7 @@ import projects from '@/store/modules/projects';
   computed: {
     project() {
       const projectId = this.$route.params.id
-      const projects = this.$store.state.projectsData.projects.projects
+      const projects = this.$store.state.projectsData.projects
       const project = projects.find(p => p.id == projectId)
       return project;
     },

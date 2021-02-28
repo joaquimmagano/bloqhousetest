@@ -37,7 +37,7 @@ import properties from '@/store/modules/properties';
   computed: {
     property() {
       const propertyId = this.$route.params.id
-      const properties = this.$store.state.propertiesData.properties.properties
+      const properties = this.$store.state.propertiesData.properties
 
       const property = properties.find(p => p.id == propertyId)
 

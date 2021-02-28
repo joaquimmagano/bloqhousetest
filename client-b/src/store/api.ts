@@ -8,7 +8,7 @@ export const api = axios.create({
 export async function getProjects(){
     try {
         const response = await api.get('/projects');
-        return response.data as ProjectsResponse;
+        return response.data.projects as ProjectsResponse;
     } catch (e) {
         console.error(e)
     }
