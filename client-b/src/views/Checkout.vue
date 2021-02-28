@@ -1,17 +1,21 @@
 <template>
   <div class="sideBarContainer">
       <div style="display: flex; flex-direction: column">
-        <img height="400px" width="400px" :src="property.img" />
+        <!-- <img height="400px" width="400px" :src="project.img" /> -->
+        <div>
+          <h3>Project Description</h3>
+          <p>{{project.description}}</p>
+        </div>
         <div>
             <div>
                 <p>Checkout form</p>
-                <p>{{property.name}}</p>
-                <p>Available shares: {{this.property.availableShares}}</p>
-                <p>Price per share: {{this.sharePrice}}</p>
+                <p>{{project.name}}</p>
+                <p>Available slots: {{this.project.availableSlots}}</p>
+                <p>Price per slot: {{this.slotPrice}}</p>
                 <div>
-                  <input @input="inputHandler" placeholder="shares to buy" type="number" > = {{purchaseValue}}€
+                  <input @input="inputHandler" placeholder="slots to buy" type="number" > = {{purchaseValue}}€
                 </div>
-                <button v-if="this.property.availableShares > 0" @click="invest">Invest</button>
+                <button v-if="this.project.availableSlots > 0" @click="invest">Fund</button>
             </div>
         </div>
       </div>
@@ -22,8 +26,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import router from '../router/index';
-import store from '../store/index';
-import properties from '@/store/modules/properties';
+import projects from '@/store/modules/projects';
 
 
 @Component({
@@ -31,24 +34,22 @@ import properties from '@/store/modules/properties';
     data() {
       return {
         purchaseValue: 0,
-        numberOfSharesToBuy: 0
+        numberOfSlotsToBuy: 0
       }
     },
   computed: {
-    property() {
-      const propertyId = this.$route.params.id
-      const properties = this.$store.state.propertiesData.properties.properties
-
-      const property = properties.find(p => p.id == propertyId)
-
-      return property;
+    project() {
+      const projectId = this.$route.params.id
+      const projects = this.$store.state.projectsData.projects.projects
+      const project = projects.find(p => p.id == projectId)
+      return project;
     },
-    sharePrice() {
-      const sharePrice = this.property.totalValue / this.property.totalShares
-      return sharePrice
+    slotPrice() {
+      const slotPrice = this.project.projectGoal / this.project.totalSlots
+      return slotPrice
     },
-    availableShares() {
-      return this.property.availableShares
+    availableSlots() {
+      return this.project.availableSlots
     }
   },
   methods: {
@@ -57,15 +58,15 @@ import properties from '@/store/modules/properties';
     },
     inputHandler(e) {
       const inputValue = e.target.value
-      this.$data.numberOfSharesToBuy = inputValue
-      this.$data.purchaseValue = this.numberOfSharesToBuy * this.sharePrice;
+      this.$data.numberOfSlotsToBuy = inputValue
+      this.$data.purchaseValue = this.numberOfSlotsToBuy * this.slotPrice;
     },
     invest(){
       const payload = {
-        propertyId: this.property.id,
-        purchaseAmount: this.$data.numberOfSharesToBuy
+        projectId: this.project.id,
+        purchaseAmount: this.$data.numberOfSlotsToBuy
       }
-      properties.investInProperty(payload)
+      projects.investInProject(payload)
     }
   }
 })

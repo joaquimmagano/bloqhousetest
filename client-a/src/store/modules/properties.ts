@@ -13,6 +13,7 @@ class PropertiesModule extends VuexModule {
     properties: Property[] = []
     propertiesLocations: PropertiesLocation[] = []
     selectedLocations = []
+    showOnlyAvailableProperties = false
 
     @MutationAction({ mutate: ['properties', 'propertiesLocations']})
     async getProperties(){
@@ -34,11 +35,13 @@ class PropertiesModule extends VuexModule {
     @MutationAction({ mutate: ['properties']})
     async investInProperty(payload){
         const propertyToUpdate = await investInProperty(payload)
-        const propertyToUpdateIndex = this.state.properties.properties.findIndex(p => p.id == propertyToUpdate.id)
-        this.state.properties.properties[propertyToUpdateIndex].availableShares = propertyToUpdate.availableShares;
+        if(propertyToUpdate) {
+            const propertyToUpdateIndex = this.state.properties.properties.findIndex(p => p.id == propertyToUpdate.id)
+            this.state.properties.properties[propertyToUpdateIndex].availableShares = propertyToUpdate.availableShares;
+        }
         return { 
             properties: this.state.properties,
-        } 
+        }
     }
 
     @MutationAction({ mutate: ['properties']})
@@ -67,6 +70,15 @@ class PropertiesModule extends VuexModule {
         }
         return {
             properties: this.state.properties
+        }
+    }
+
+    @MutationAction({ mutate: [ 'showOnlyAvailableProperties']})
+    async toggleAvailability(payload){
+        const { isSelected } = payload;
+
+        return {
+            showOnlyAvailableProperties: isSelected
         }
     }
 }

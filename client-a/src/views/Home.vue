@@ -23,9 +23,18 @@ import PropertyCard from "@/components/PropertyCard.vue"; // @ is an alias to /s
     properties() {
       let properties = this.$store.state.propertiesData.properties.properties;
       if(properties){
-        properties = properties.filter(p => p.isSelected)
+        if(this.showOnlyAvailableProperties){
+          properties = properties.filter(p => p.isSelected && p.availableShares > 0);
+        } else {
+          properties = properties.filter(p => p.isSelected)
+        }
       }
       return properties;
+    },
+    showOnlyAvailableProperties() {
+      const showOnlyAvailableProperties = this.$store.state.propertiesData.showOnlyAvailableProperties
+      
+      return showOnlyAvailableProperties;
     }
   }
 })

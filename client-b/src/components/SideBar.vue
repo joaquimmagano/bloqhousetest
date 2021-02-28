@@ -1,6 +1,6 @@
 <template>
   <div class="sideBarContainer">
-    <SideBarList listTitle="Locations" :listItems="propertiesLocations" />
+    <SideBarList listTitle="Locations" :listItems="projectsCategories" />
     <AvailabilityChecker />
   </div>
 </template>
@@ -16,10 +16,10 @@ import AvailabilityChecker from "@/components/AvailibityChecker.vue";
         AvailabilityChecker
     },
     computed: {
-        propertiesLocations() {
-          const propertiesLocations = this.$store.state.propertiesData.propertiesLocations;
-          const uniquePropertiesLocations = [...new Map(propertiesLocations.map(item => [item['title'], item])).values()]
-          return uniquePropertiesLocations;
+        projectsCategories() {
+          const projectsCategories = this.$store.state.projectsData.projectsCategories;
+          const uniqueProjectsLocations = [...new Map(projectsCategories.map(item => [item['title'], item])).values()]
+          return uniqueProjectsLocations;
         }
     },
 })
@@ -39,6 +39,7 @@ export default class SideBar extends Vue {
 .sideBarContainer {
   border: 1px solid red;
   height: 95vh;
+  width: 300px;
 }
 h3 {
   margin: 40px 0 0;

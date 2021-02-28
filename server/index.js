@@ -43,7 +43,6 @@ app.post('/api/properties/invest/:id', (req, res) => {
     if(data && data.purchaseAmount){
         const purchase_amount = data.purchaseAmount;
         let property = propertiesData.properties.find(p => p.id == propertyId)
-
         if(property.availableShares >= purchase_amount){
             property.availableShares = property.availableShares - purchase_amount;
             res.status(200).send(property)
@@ -59,17 +58,15 @@ app.get('/api/projects', (req, res) => {
     res.json(projectsData)
 })
 
-app.post('/api/checkout/project/:id', (req, res) => {
+app.post('/api/projects/fund/:id', (req, res) => {
     const projectId = req.params.id;
     const data = req.body;
-
-    if(data && data.purchase_amount){
-        const purchase_amount = data.purchase_amount;
+    if(data && data.purchaseAmount){
+        const purchase_amount = data.purchaseAmount;
         let project = projectsData.projects.find(p => p.id == projectId)
-
         if(project.availableSlots >= purchase_amount){
             project.availableSlots = project.availableSlots - purchase_amount;
-            res.status(200).send({success: true})
+            res.status(200).send(project)
         } else {
             res.status(404).send({success: false, error: {message: 'The purchase amount exceeds the available slots.'}})
         }
